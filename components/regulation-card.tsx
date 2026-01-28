@@ -34,36 +34,41 @@ export function RegulationCard({ regulation }: RegulationCardProps) {
 
   return (
     <a href={regulation.url} target="_blank" rel="noopener noreferrer" className="block h-full group">
-      <Card className="h-full cursor-pointer transition-all hover:shadow-lg hover:border-blue-500/40 hover:-translate-y-1 relative overflow-hidden">
+      {/* MUDANÇA: Cards um pouco mais compactos com hover shadow */}
+      <Card className="h-full cursor-pointer transition-all hover:shadow-lg hover:border-blue-500/40 hover:-translate-y-1 relative overflow-hidden flex flex-col">
         
-        <div className="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
-            <ExternalLink className="w-4 h-4 text-blue-500" />
+        <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <ExternalLink className="w-3 h-3 text-blue-500" />
         </div>
 
-        <CardHeader className="pb-3">
-          <div className="flex items-start justify-between gap-4">
-            <div className="space-y-1">
-              <CardTitle className="text-base font-semibold leading-tight text-blue-950 group-hover:text-blue-700 transition-colors">
+        {/* MUDANÇA: Padding reduzido (p-4) para caber mais cards */}
+        <CardHeader className="p-4 pb-2">
+          <div className="flex items-start justify-between gap-2">
+            <div className="space-y-1 w-full">
+              <CardTitle className="text-sm font-bold leading-snug text-blue-950 group-hover:text-blue-700 transition-colors line-clamp-2">
                 {regulation.title}
               </CardTitle>
-              <p className="text-sm text-muted-foreground font-medium">
+              {/* MUDANÇA: Número um pouco menor e mais discreto */}
+              <p className="text-xs text-muted-foreground font-medium">
                 {regulation.number}
               </p>
             </div>
-            <Badge className={`${badgeColorClass} shrink-0`} variant={badgeVariant}>
+            {/* Badge mais compacto */}
+            <Badge className={`${badgeColorClass} shrink-0 text-[10px] px-1.5 h-5`} variant={badgeVariant}>
               {regulation.status}
             </Badge>
           </div>
         </CardHeader>
-        <CardContent>
-          {/* AQUI ESTÁ A MUDANÇA: title={regulation.description} */}
+        
+        <CardContent className="p-4 pt-2 flex-1 flex flex-col">
           <p 
-            className="mb-4 text-sm text-muted-foreground line-clamp-3" 
+            className="mb-3 text-xs text-muted-foreground line-clamp-3 leading-relaxed flex-1" 
             title={regulation.description} 
           >
             {regulation.description}
           </p>
-          <div className="flex items-center gap-4 text-xs text-muted-foreground mt-auto">
+          
+          <div className="flex items-center gap-3 text-[10px] text-muted-foreground mt-auto">
             <div className="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-full">
               <FileText className="h-3 w-3" />
               <span>{regulation.type}</span>

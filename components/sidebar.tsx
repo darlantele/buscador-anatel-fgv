@@ -1,7 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { ExternalLink, MessageCircleQuestion } from "lucide-react"
 
 interface SidebarProps {
   selectedThemes: string[]
@@ -12,6 +11,20 @@ interface SidebarProps {
   onStatusChange: (status: string, checked: boolean) => void
 }
 
+const themes = [
+  "Serviço Móvel (SMP)",
+  "Banda Larga (SCM)",
+  "Radiofrequência",
+  "Radiodifusão",
+  "Consumidor",
+  "Outorga",
+  "Satélite",
+  "Segurança Cibernética",
+]
+
+const types = ["Resolução", "Lei", "Decreto"]
+const statusList = ["Vigente", "Revogado"]
+
 export function Sidebar({
   selectedThemes,
   selectedTypes,
@@ -20,99 +33,106 @@ export function Sidebar({
   onTypeChange,
   onStatusChange,
 }: SidebarProps) {
-  
-  // LISTA DE TEMAS ESTRATÉGICA (Com nomes amigáveis)
-  const themes = [
-    "Serviço Móvel (SMP)",       // Adicionado
-    "Banda Larga (SCM)",         // Adicionado
-    "Radiofrequência",
-    "Radiodifusão",
-    "Consumidor",
-    "Outorga",
-    "Sanções",
-    "Satélite",
-    "Interconexão",
-    "Segurança Cibernética",
-    "Espectro"
-  ]
-
-  const types = ["Resolução", "Lei", "Decreto"]
-  const statuses = ["Vigente", "Revogado"]
-
   return (
-    <div className="w-64 flex-shrink-0 border-r bg-slate-50/50 hidden md:block h-[calc(100vh-64px)] sticky top-16">
-      <ScrollArea className="h-full py-6 px-4">
-        <div className="space-y-6">
-          
-          {/* SEÇÃO 1: SITUAÇÃO */}
-          <div>
-            <h3 className="mb-3 text-sm font-semibold text-foreground/90">Situação</h3>
-            <div className="space-y-2">
-              {statuses.map((status) => (
-                <div key={status} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`status-${status}`}
-                    checked={selectedStatus.includes(status)}
-                    onCheckedChange={(checked) => onStatusChange(status, checked as boolean)}
-                  />
-                  <Label htmlFor={`status-${status}`} className="text-sm font-normal leading-none cursor-pointer">
-                    {status}
-                  </Label>
-                </div>
-              ))}
-            </div>
+    // MUDANÇA CRÍTICA AQUI:
+    // 1. Mudamos de 'top-0' para 'top-20'. Isso faz ela travar 80px abaixo do topo, não escondendo nada.
+    // 2. Mudamos a altura para 'h-fit' com 'max-h-[calc(100vh-6rem)]'. Isso impede que ela fique maior que a tela.
+    <aside className="w-64 sticky top-20 h-fit max-h-[calc(100vh-6rem)] bg-white border-r border-slate-200 flex flex-col hidden md:flex text-slate-700 rounded-lg ml-2 my-4 shadow-sm border overflow-hidden">
+      
+      {/* Área de rolagem interna ajustada */}
+      <div className="p-3 space-y-4 flex-1 overflow-y-auto custom-scrollbar">
+        
+        {/* Seção de Status */}
+        <div className="space-y-2">
+          <h3 className="text-[10px] font-bold text-slate-900 uppercase tracking-wider">Situação</h3>
+          <div className="space-y-1">
+            {statusList.map((status) => (
+              <div key={status} className="flex items-center space-x-2">
+                <Checkbox 
+                  id={`status-${status}`} 
+                  checked={selectedStatus.includes(status)}
+                  onCheckedChange={(checked) => onStatusChange(status, checked as boolean)}
+                  className="h-3.5 w-3.5"
+                />
+                <Label htmlFor={`status-${status}`} className="text-xs font-medium cursor-pointer">
+                  {status}
+                </Label>
+              </div>
+            ))}
           </div>
-
-          <div className="h-px bg-border" />
-
-          {/* SEÇÃO 2: TIPO */}
-          <div>
-            <h3 className="mb-3 text-sm font-semibold text-foreground/90">Tipo de Documento</h3>
-            <div className="space-y-2">
-              {types.map((type) => (
-                <div key={type} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`type-${type}`}
-                    checked={selectedTypes.includes(type)}
-                    onCheckedChange={(checked) => onTypeChange(type, checked as boolean)}
-                  />
-                  <Label htmlFor={`type-${type}`} className="text-sm font-normal leading-none cursor-pointer">
-                    {type}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="h-px bg-border" />
-
-          {/* SEÇÃO 3: ASSUNTOS */}
-          <Accordion type="single" collapsible defaultValue="themes" className="w-full">
-            <AccordionItem value="themes" className="border-none">
-              <AccordionTrigger className="py-2 text-sm font-semibold hover:no-underline">
-                Assuntos e Temas
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="space-y-2 pt-2">
-                  {themes.map((theme) => (
-                    <div key={theme} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={`theme-${theme}`}
-                        checked={selectedThemes.includes(theme)}
-                        onCheckedChange={(checked) => onThemeChange(theme, checked as boolean)}
-                      />
-                      <Label htmlFor={`theme-${theme}`} className="text-sm font-normal leading-none cursor-pointer">
-                        {theme}
-                      </Label>
-                    </div>
-                  ))}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-
         </div>
-      </ScrollArea>
-    </div>
+
+        <div className="h-px bg-slate-100" />
+
+        {/* Seção de Tipos */}
+        <div className="space-y-2">
+          <h3 className="text-[10px] font-bold text-slate-900 uppercase tracking-wider">Tipo de Documento</h3>
+          <div className="space-y-1">
+            {types.map((type) => (
+              <div key={type} className="flex items-center space-x-2">
+                <Checkbox 
+                  id={`type-${type}`} 
+                  checked={selectedTypes.includes(type)}
+                  onCheckedChange={(checked) => onTypeChange(type, checked as boolean)}
+                  className="h-3.5 w-3.5"
+                />
+                <Label htmlFor={`type-${type}`} className="text-xs font-medium cursor-pointer">
+                  {type}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="h-px bg-slate-100" />
+
+        {/* Seção de Temas */}
+        <div className="space-y-2">
+          <h3 className="text-[10px] font-bold text-slate-900 uppercase tracking-wider">Assuntos e Temas</h3>
+          <div className="space-y-1">
+            {themes.map((theme) => (
+              <div key={theme} className="flex items-center space-x-2">
+                <Checkbox 
+                  id={`theme-${theme}`} 
+                  checked={selectedThemes.includes(theme)}
+                  onCheckedChange={(checked) => onThemeChange(theme, checked as boolean)}
+                  className="h-3.5 w-3.5"
+                />
+                <Label htmlFor={`theme-${theme}`} className="text-xs font-medium cursor-pointer leading-tight">
+                  {theme}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="h-px bg-slate-100 mt-2" />
+
+        {/* Card Fale com a Anatel */}
+        <div className="pt-1">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-2.5 shadow-sm">
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <MessageCircleQuestion className="h-3.5 w-3.5 text-blue-600" />
+              <h4 className="font-semibold text-xs text-blue-950">Fale com a Anatel</h4>
+            </div>
+            
+            <p className="text-[10px] text-slate-600 mb-2 leading-tight">
+              Dúvidas ou elogios? Fale com a equipe técnica.
+            </p>
+            
+            <a 
+              href="https://www.gov.br/anatel/pt-br/canais_atendimento" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[10px] font-bold text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-1"
+            >
+              Canais de atendimento
+              <ExternalLink className="h-2.5 w-2.5" />
+            </a>
+          </div>
+        </div>
+        
+      </div>
+    </aside>
   )
 }
