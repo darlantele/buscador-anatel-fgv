@@ -37,7 +37,7 @@ export function Sidebar({
     // MUDANÇAS PARA "ESTICAR":
     // 1. 'top-16': Diminuí o espaço do topo (ficou mais perto do cabeçalho).
     // 2. 'max-h-[calc(100vh-5rem)]': Aumentei a altura máxima (vai mais perto do chão).
-    <aside className="w-64 sticky top-16 h-fit max-h-[calc(100vh-5rem)] bg-white border-r border-slate-200 flex flex-col hidden md:flex text-slate-700 rounded-lg ml-2 shadow-sm border overflow-hidden">
+    <aside className="w-64 sticky top-18 h-fit max-h-[calc(100vh-5rem)] bg-white border-r border-slate-200 flex flex-col hidden md:flex text-slate-700 rounded-lg ml-2 shadow-sm border overflow-hidden">
       
       {/* Scrollbar invisível mantida */}
       <div className="p-3 space-y-4 flex-1 overflow-y-auto custom-scrollbar [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
