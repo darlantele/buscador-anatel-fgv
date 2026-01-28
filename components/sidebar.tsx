@@ -34,13 +34,13 @@ export function Sidebar({
   onStatusChange,
 }: SidebarProps) {
   return (
-    // MUDANÇA CRÍTICA AQUI:
-    // 1. Mudamos de 'top-0' para 'top-20'. Isso faz ela travar 80px abaixo do topo, não escondendo nada.
-    // 2. Mudamos a altura para 'h-fit' com 'max-h-[calc(100vh-6rem)]'. Isso impede que ela fique maior que a tela.
-    <aside className="w-64 sticky top-20 h-fit max-h-[calc(100vh-6rem)] bg-white border-r border-slate-200 flex flex-col hidden md:flex text-slate-700 rounded-lg ml-2 my-4 shadow-sm border overflow-hidden">
+    // MUDANÇAS PARA "ESTICAR":
+    // 1. 'top-16': Diminuí o espaço do topo (ficou mais perto do cabeçalho).
+    // 2. 'max-h-[calc(100vh-5rem)]': Aumentei a altura máxima (vai mais perto do chão).
+    <aside className="w-64 sticky top-16 h-fit max-h-[calc(100vh-5rem)] bg-white border-r border-slate-200 flex flex-col hidden md:flex text-slate-700 rounded-lg ml-2 shadow-sm border overflow-hidden">
       
-      {/* Área de rolagem interna ajustada */}
-      <div className="p-3 space-y-4 flex-1 overflow-y-auto custom-scrollbar">
+      {/* Scrollbar invisível mantida */}
+      <div className="p-3 space-y-4 flex-1 overflow-y-auto custom-scrollbar [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
         
         {/* Seção de Status */}
         <div className="space-y-2">
