@@ -154,7 +154,7 @@ export function RegulationCard({ regulation }: RegulationCardProps) {
             <Button className="w-full bg-blue-700 hover:bg-blue-800" size="lg" asChild>
               <a href={regulation.url} target="_blank" rel="noopener noreferrer">
                 <ExternalLink className="mr-2 h-4 w-4" />
-                Acessar Documento Original (PDF)
+                ACESSAR DOCUMENTO ORIGINAL
               </a>
             </Button>
           </div>
